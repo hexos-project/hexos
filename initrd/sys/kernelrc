@@ -1,0 +1,13 @@
+# this file contains init script for kernel
+# created for ISO bootable installer
+uart_puts "Init file started"
+gbus_init
+drv_load generic drv/fb.elf
+drv_load generic drv/sata.elf
+drv_load generic drv/scsi.elf
+drv_load generic drv/sound.elf
+drv_load filesystem drv/fat32.elf
+drv_load filesystem drv/ext4.elf
+initrd_exec sys/rootproc.elf
+gbus_putln rootproc "start installer.elf"
+
