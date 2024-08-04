@@ -56,7 +56,10 @@ dkms.conf
 *.iso
 *.img
 *.bin
+
+# Submodules
 bootboot
+octox
 
 # Archives
 *.zip*
