@@ -1,6 +1,3 @@
 [submodule "octox"]
 	path = octox
 	url = https://github.com/hexos-project/octox-x86_64.git
-[submodule "bootboot"]
-	path = bootboot
-	url = https://gitlab.com/bztsrc/bootboot.git

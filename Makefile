@@ -14,17 +14,18 @@ kern: gitmods-upd
 	@echo "    MK\t$(KERNEL)"
 	@make -C octox --no-print-directory
 
-bootboot/mkbootimg/mkbootimg: gitmods-upd
-	@echo "    MK\t$mkbootimg"
-	@make -C bootboot/mkbootimg --no-print-directory
+mkbootimg:
+	wget https://gitlab.com/bztsrc/bootboot/-/raw/binaries/mkbootimg-Linux.zip
+	unzip mkbootimg-Linux.zip -d mkbootimg
+	rm DESCRIPT.ION
 
 initramd: kern
 	@echo "    MK\t$(INITRD)"
 	@cp $(KERNEL) $(SYS)
 
-image: initramd bootboot/mkbootimg/mkbootimg
+image: initramd mkbootimg
 	@echo "    MK\t$(IMAGE)"
-	@bootboot/mkbootimg/mkbootimg $(CONFIG) $(IMAGE)
+	@./mkbootimg $(CONFIG) $(IMAGE)
 
 gitmods-upd:
 	@echo "    UPD\tGITMODS"
@@ -33,6 +34,5 @@ gitmods-upd:
 	git pull origin main --rebase
 	cd ..
 	git add octox
-	git add bootboot
 	git commit -m "UPD: octox submodule updated"
 	git push origin main --force
