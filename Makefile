@@ -28,11 +28,11 @@ image: initramd bootboot/mkbootimg/mkbootimg
 
 gitmods-upd:
 	@echo "    UPD\tGITMODS"
-	@cd octox
-	@git fetch
-	@git checkout main
-	@git pull origin main --rebase
-	@cd ..
-	@git add octox
-	@git commit -m "UPD: octox submodule updated"
-	@git push origin main --force
+	cd octox
+	git fetch
+	git pull origin main --rebase
+	cd ..
+	git add octox
+	git add bootboot
+	git commit -m "UPD: octox submodule updated"
+	git push origin main --force
