@@ -4,6 +4,8 @@ SYS=$(INITRD)/sys
 CONFIG=iconfig
 IMAGE=image.iso
 
+.IGNORE: gitmods-upd mkbootimg
+
 all: image test
 
 test:
@@ -16,8 +18,10 @@ kern: gitmods-upd
 
 mkbootimg:
 	wget https://gitlab.com/bztsrc/bootboot/-/raw/binaries/mkbootimg-Linux.zip
-	unzip mkbootimg-Linux.zip -d mkbootimg
-	rm DESCRIPT.ION
+	unzip mkbootimg-Linux.zip
+	chmod +x mkbootimg
+	rm -f mkbootimg-Linux.zip
+	rm -f DESCRIPT.ION
 
 initramd: kern
 	@echo "    MK\t$(INITRD)"
@@ -35,4 +39,3 @@ gitmods-upd:
 	cd ..
 	git add octox
 	git commit -m "UPD: octox submodule updated"
-	git push origin main --force
