@@ -1,7 +1,6 @@
-KERNEL=kernel/kernel.elf
+KERNEL=octox/kernel.elf
 INITRD=initrd
 SYS=$(INITRD)/sys
-TMPCONFIG=/tmp/config.json
 CONFIG=iconfig
 IMAGE=image.iso
 
@@ -10,13 +9,17 @@ all: image test
 test:
 	qemu-system-x86_64 -m 4096 -enable-kvm -cpu host -smp 12 -cdrom $(IMAGE) -serial stdio -bios /usr/share/ovmf/OVMF.fd
 
-kern:
-	make -C kernel
+kern: gitmods-upd
+	make -C octox
+
+bootboot/mkbootimg/mkbootimg: gitmods-upd
+	make -C bootboot/mkbootimg
 
 initramd: kern
 	cp $(KERNEL) $(SYS)
 
-image: initramd
-	cp $(CONFIG) $(TMPCONFIG)
-	utils/mkbootimg $(TMPCONFIG) $(IMAGE)
-	rm $(TMPCONFIG)
+image: initramd bootboot/mkbootimg/mkbootimg
+	bootboot/mkbootimg/mkbootimg $(CONFIG) $(IMAGE)
+
+gitmods-upd:
+	git submodule update
