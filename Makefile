@@ -17,11 +17,12 @@ kern: gitmods-upd
 	@make -C octox --no-print-directory
 
 mkbootimg:
-	wget https://gitlab.com/bztsrc/bootboot/-/raw/binaries/mkbootimg-Linux.zip
-	unzip mkbootimg-Linux.zip
-	chmod +x mkbootimg
-	rm -f mkbootimg-Linux.zip
-	rm -f DESCRIPT.ION
+	@echo "    GET\tMKBOOTIMG"
+	@wget https://gitlab.com/bztsrc/bootboot/-/raw/binaries/mkbootimg-Linux.zip > /dev/null 2>&1
+	@unzip mkbootimg-Linux.zip > /dev/null 2>&1
+	@chmod +x mkbootimg > /dev/null 2>&1
+	@rm -f mkbootimg-Linux.zip > /dev/null 2>&1
+	@rm -f DESCRIPT.ION > /dev/null 2>&1
 
 initramd: kern
 	@echo "    MK\t$(INITRD)"
@@ -33,9 +34,5 @@ image: initramd mkbootimg
 
 gitmods-upd:
 	@echo "    UPD\tGITMODS"
-	cd octox
-	git fetch
-	git pull origin main --rebase
-	cd ..
-	git add octox
-	git commit -m "UPD: octox submodule updated"
+	@rm -rf octox > /dev/null 2>&1
+	@git clone https://github.com/hexos-project/octox-x86_64.git octox > /dev/null 2>&1
